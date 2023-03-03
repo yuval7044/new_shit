@@ -2,9 +2,9 @@ import socket
 from threading import Thread
 s = socket.socket()
 print("Socket succecfuly connected")
-s.bind(('127.0.0.1', 5050))
+s.bind(('127.0.0.1', 5051))
 clients_dict = {}
-print("Socket bindend to " + "5050")
+print("Socket bindend to " + "5051")
 s.listen(5)
 
 def dict_value(dict, addr): #print the place of speceific value in dict
@@ -32,7 +32,7 @@ def new_clinet(c, addr):
             print(addr, "Disconnected")
             exit = True
         elif client_message == "ls":
-            c.send(str(clients_list).encode())
+            c.send(str(clients_dict).encode())
         else:
             print(name_of_client,"--> ",client_message)
             c.send(client_message.encode())
