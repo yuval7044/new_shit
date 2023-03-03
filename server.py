@@ -2,9 +2,9 @@ import socket
 from threading import Thread
 s = socket.socket()
 print("Socket succecfuly connected")
-s.bind(('127.0.0.1', 5051))
+s.bind(('127.0.0.1', 5050))
 clients_dict = {}
-print("Socket bindend to " + "5051")
+print("Socket bindend to " + "5050")
 s.listen(5)
 
 def dict_value(dict, addr): #print the place of speceific value in dict
@@ -17,15 +17,11 @@ def dict_keys(dict, client): #print the place of speceific key in dict
         if name == client:
             return len(client)
 
-    #checkkkkkkk
-
 def new_clinet(c, addr):
     name_of_client = ""
     exit = False
     place_of_ip = dict_value(clients_dict,addr)
     place_of_name = dict_keys(clients_dict,client_name)
-    print(place_of_ip)
-    print(place_of_name)
     while exit == False:
         client_message = c.recv(4096).decode()
         if client_message == "":
