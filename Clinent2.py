@@ -1,22 +1,35 @@
 import socket
-message = ""
+from threading import Thread
 s = socket.socket()
 s.connect(("127.0.0.1", 5050))
-print("Connected to 127.0.0.1 at Port 5050")
+print( "Connected to 127.0.0.1 at Port 5050")
 Name = input(str("Name: "))
 s.send(Name.encode())
-while True:
-    message = input(str("message:"))
-    if message == "[e]":
-        break
-    elif message == "ls":
-        s.send(message.encode())
-        print("Clients Connected: ")
-        print(s.recv(1024).decode())
-    else:
-        s.send(message.encode())
-        data = s.recv(1024).decode()
-        print("message from server:", data)
-def listen():
-    data = s.recv(1024).decode()
-    print ("Message from server:", data)
+
+def sending_message():
+    while True:
+        message = input(str("Terminal: "))
+
+        s.send(str(message).encode())
+
+        if message == "send":
+            name = input("Who to send?")
+            s.send(str(name).encode())
+            message = input("Message to" + name + ":")
+            s.send(str(message).encode())
+
+
+        if message == "[e]":
+            break
+
+
+
+
+
+def receiving_message():
+    while True:
+        data = s.recv(4096).decode()
+        print(data)
+
+sending = Thread(target=sending_message())
+receiving = Thread(target=receiving_message())

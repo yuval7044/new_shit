@@ -27,13 +27,8 @@ def new_client(c,addr):
             c.send(str(names[9:]).encode())
         elif clients_terminal == "send":
             name = c.recv(1024).decode()
-            for ign in clients_dict.keys():
-                if ign == name:
-                    data = s.recv(4096)
-
-                else:
-                    Error = "Error Name not found try ls"
-                    c.send(Error.encode())
+            data = c.recv(1024).decode()
+            clients_dict[name].send(data)
 
         elif clients_terminal == "help":
             help = ("""[e]  - Exit
@@ -60,6 +55,6 @@ while True:
     c,add = s.accept()
     print("Got connected from" + str(add))
     client_name = c.recv(1024).decode()
-    add_client_dict(client_name, add)
+    add_client_dict(client_name, c)
     client1 = Thread(target=new_client, args=(c, add))
     client1.start()
