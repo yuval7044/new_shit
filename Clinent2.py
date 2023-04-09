@@ -17,3 +17,6 @@ while True:
         s.send(message.encode())
         data = s.recv(1024).decode()
         print("message from server:", data)
+def listen():
+    data = s.recv(1024).decode()
+    print ("Message from server:", data)
