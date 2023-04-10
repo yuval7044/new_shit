@@ -7,7 +7,7 @@ clients_dict = {}
 print("Socket bindend to " + "5050")
 s.listen(5)
 
-def new_client(c,addr,client_name):
+def new_client(c,addr,client_name, history):
     while True:
         clients_terminal = c.recv(1024).decode()
         if clients_terminal == "[e]":
@@ -21,11 +21,11 @@ def new_client(c,addr,client_name):
             c.send(str(names).encode())
         elif clients_terminal == "send":
             name = c.recv(1024).decode()
-            print(clients_dict[name])
             data = c.recv(1024).decode()
-            print(clients_dict[name])
-            clients_dict[name].send(str("\n" + client_name + " sent you: " + data).encode())
-
+            clients_dict[name].append(client_name + " sent: "+ data)
+        elif clients_terminal == "recv":
+            new = "\n".join(clients_dict[client_name])
+            c.send(new.encode())
         elif clients_terminal == "help" or clients_terminal == "Help":
             help = ("""[e]  - Exit \nls   - Client list \n send - send messages""")
             c.send(str(help).encode())
@@ -41,14 +41,15 @@ def new_client(c,addr,client_name):
             c.send(str(Error).encode())
 
 
-def add_client_dict(key,value):
+def history_client_dict(key,value):
     clients_dict[key] = value
 
 
 while True:
     c,add = s.accept()
+    history = []
     print("Got connected from" + str(add))
     client_name = c.recv(1024).decode()
-    add_client_dict(client_name, c)
-    client1 = Thread(target=new_client, args=(c, add, client_name))
+    history_client_dict(client_name, history)
+    client1 = Thread(target=new_client, args=(c, add, client_name,history))
     client1.start()

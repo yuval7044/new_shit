@@ -18,7 +18,8 @@ def sending_message():
             s.send(str(name).encode())
             message = input("Message to " + name + ":")
             s.send(str(message).encode())
-
+        elif message == "recv":
+            time.sleep(0.5)
         time.sleep(0.1)
 
         if message == "[e]":
