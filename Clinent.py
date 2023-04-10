@@ -25,7 +25,7 @@ def sending_message():
         if message == "[e]":
             break
 
-
+#asdsa
 
 
 
