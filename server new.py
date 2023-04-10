@@ -1,5 +1,4 @@
 import socket
-from myfunctions import add_client_dict
 from threading import Thread
 s = socket.socket()
 print("Socket succecfuly connected")
@@ -12,19 +11,18 @@ s.listen(5)
 
 
 
-def new_client(c,addr):
-    out = False
-    names = str(clients_dict.keys())
-    while out == False:
+def new_client(c,addr,client_name):
+    while True:
         clients_terminal = c.recv(1024).decode()
-        print(clients_terminal)
         if clients_terminal == "[e]":
             print(addr, "Disconnected")
             bye = "GoodBye :D"
             c.send(str(bye).encode())
-            out = True
+            clients_dict.pop(client_name)
+            break
         elif clients_terminal == "ls":
-            c.send(str(names[9:]).encode())
+            names = str(clients_dict.keys())
+            c.send(str(names).encode())
         elif clients_terminal == "send":
             name = c.recv(1024).decode()
             print(clients_dict[name])
@@ -58,5 +56,5 @@ while True:
     print("Got connected from" + str(add))
     client_name = c.recv(1024).decode()
     add_client_dict(client_name, c)
-    client1 = Thread(target=new_client, args=(c, add))
+    client1 = Thread(target=new_client, args=(c, add, client_name))
     client1.start()
