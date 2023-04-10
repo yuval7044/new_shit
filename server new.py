@@ -26,8 +26,8 @@ def new_client(c,addr,client_name):
             print(clients_dict[name])
             clients_dict[name].send(str("\n" + client_name + " sent you: " + data).encode())
 
-        elif clients_terminal == "help":
-            help = ("""[e]  - Exit \n ls   - Client list \n send - send messages""")
+        elif clients_terminal == "help" or clients_terminal == "Help":
+            help = ("""[e]  - Exit \nls   - Client list \n send - send messages""")
             c.send(str(help).encode())
 
         elif clients_terminal == " ":
