@@ -7,10 +7,6 @@ clients_dict = {}
 print("Socket bindend to " + "5050")
 s.listen(5)
 
-
-
-
-
 def new_client(c,addr,client_name):
     while True:
         clients_terminal = c.recv(1024).decode()
@@ -28,12 +24,10 @@ def new_client(c,addr,client_name):
             print(clients_dict[name])
             data = c.recv(1024).decode()
             print(clients_dict[name])
-            clients_dict[name].send(str(data).encode())
+            clients_dict[name].send(str("\n" + client_name + " sent you: " + data).encode())
 
         elif clients_terminal == "help":
-            help = ("""[e]  - Exit
-ls   - Client list
-send - send messages""")
+            help = ("""[e]  - Exit \n ls   - Client list \n send - send messages""")
             c.send(str(help).encode())
 
         elif clients_terminal == " ":
