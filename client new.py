@@ -16,7 +16,7 @@ def sending_message():
         if message == "send":
             name = input("Who to send?")
             s.send(str(name).encode())
-            message = input("Message to" + name + ":")
+            message = input("Message to " + name + ":")
             s.send(str(message).encode())
 
         time.sleep(0.1)

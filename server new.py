@@ -27,8 +27,10 @@ def new_client(c,addr):
             c.send(str(names[9:]).encode())
         elif clients_terminal == "send":
             name = c.recv(1024).decode()
+            print(clients_dict[name])
             data = c.recv(1024).decode()
-            clients_dict[name].send(data)
+            print(clients_dict[name])
+            clients_dict[name].send(str(data).encode())
 
         elif clients_terminal == "help":
             help = ("""[e]  - Exit

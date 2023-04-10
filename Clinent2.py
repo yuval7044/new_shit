@@ -1,4 +1,5 @@
 import socket
+import time
 from threading import Thread
 s = socket.socket()
 s.connect(("127.0.0.1", 5050))
@@ -15,9 +16,10 @@ def sending_message():
         if message == "send":
             name = input("Who to send?")
             s.send(str(name).encode())
-            message = input("Message to" + name + ":")
+            message = input("Message to " + name + ":")
             s.send(str(message).encode())
 
+        time.sleep(0.1)
 
         if message == "[e]":
             break
@@ -30,6 +32,10 @@ def receiving_message():
     while True:
         data = s.recv(4096).decode()
         print(data)
+        if data == "GoodBye :D":
+            break
 
-sending = Thread(target=sending_message())
-receiving = Thread(target=receiving_message())
+sending = Thread(target=sending_message)
+receiving = Thread(target=receiving_message)
+sending.start()
+receiving.start()
