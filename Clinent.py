@@ -21,11 +21,10 @@ def sending_message():
         elif message == "recv":
             time.sleep(0.5)
         time.sleep(0.1)
-
         if message == "[e]":
             break
 
-#asdsa
+
 
 
 

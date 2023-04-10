@@ -29,7 +29,9 @@ def new_client(c,addr,client_name, history):
         elif clients_terminal == "help" or clients_terminal == "Help":
             help = ("""[e]  - Exit \nls   - Client list \n send - send messages""")
             c.send(str(help).encode())
-
+        elif clients_terminal == "notf":
+            number = str(len(clients_dict[client_name]))
+            c.send(("New " + number + " Messages").encode())
         elif clients_terminal == " ":
             Error = "commend not exist try help"
             c.send(str(Error).encode())
