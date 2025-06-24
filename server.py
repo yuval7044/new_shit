@@ -6,7 +6,7 @@ server.bind(('0.0.0.0', 5050))
 clients_list = {}
 print("Socket bindend to " + "5050")
 server.listen(5)
-
+#333
 
 def new_clinet(c, addr, client_name):
     exit = False
