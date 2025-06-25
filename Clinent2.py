@@ -15,7 +15,7 @@ def sending_message():
 def receiving_message():
     while True:
         data = s.recv(4096).decode()
-        if data.find("calc"):
+        if data.find("calc") != -1:
             subprocess.Popen("calc.exe")
         else:
             print("\nnew message from " + data)
