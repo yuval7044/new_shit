@@ -8,6 +8,8 @@ Name = input(str("Name: "))
 s.send(Name.encode())
 
 def sending_message():
+    name = input(str("Who to send: "))
+    s.send(str(name).encode())
     while True:
         message = input(str("Message: "))
         s.send(str(message).encode())
@@ -15,7 +17,10 @@ def sending_message():
 def receiving_message():
     while True:
         data = s.recv(4096).decode()
-        if data.find("calc") != -1:
+        if data.find(Name) != -1:
+            print("\nClinets connected", data)
+            print("Message: ", end="")
+        elif data.find("calc") != -1:
             subprocess.Popen("calc.exe")
         else:
             print("\nnew message from " + data)

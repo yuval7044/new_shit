@@ -10,18 +10,19 @@ server.listen(5)
 
 def new_clinet(c, addr, client_name):
     exit = False
+    destination = c.recv(1024).decode()
     while exit == False:
         client_message = c.recv(4096).decode()
         if client_message == "":
             print(addr, "Disconnected")
             exit = True
         elif client_message == "ls":
-            c.send(str(clients_list).encode())
+            c.send(str(clients_list.keys()).encode())
         else:
-            for name, computer in clients_list.items():
-                if computer != c:
+            for name in clients_list.keys():
+                if name == destination:
                     message = str(client_name) +  ": " + str(client_message)
-                    computer.send(message.encode())
+                    clients_list[name].send(message.encode())
 
 while True:
     clinet, add = server.accept()
@@ -30,6 +31,7 @@ while True:
     clients_list.update({str(client_name) : clinet})
     client1 = Thread(target=new_clinet, args=(clinet,add,client_name))
     client1.start()
+    clinet.send(str(clients_list.keys()).encode())
     print(clients_list)
 
 
